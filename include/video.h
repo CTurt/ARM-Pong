@@ -23,6 +23,7 @@
 
 #define SpriteMapping_1D_32 16
 #define SpriteSize_16x16 16392
+#define SpriteSize_16x32 40976
 #define SpriteColorFormat_256Color 0
 
 #define BLACK 0

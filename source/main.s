@@ -77,8 +77,13 @@ main:
 	strh		R3, [R2, #2]
 	
 	
+	@ Setup sprites
+	
 	bl			allocateBall
 	bl			writeBall
+	
+	bl			allocatePaddle
+	bl			writePaddle
 	
 	
 	.infinite:
@@ -129,6 +134,19 @@ main:
 	.invertedYV:
 	
 	bl			drawBall
+	
+	
+	@ Draw paddles
+	mov			R0, #1
+	mov			R1, #4
+	mov			R2, #80
+	bl			drawPaddle
+	
+	
+	mov			R0, #2
+	mov			R1, #(256 - 16 - 4)
+	mov			R2, #80
+	bl			drawPaddle
 	
 	
 	bl			swiWaitForVBlank

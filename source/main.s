@@ -139,13 +139,17 @@ main:
 	@ Draw paddles
 	mov			R0, #1
 	mov			R1, #4
-	mov			R2, #80
+	ldr			R2, =paddleY
+	ldr			R2, [R2]
+	lsr			R2, #8
 	bl			drawPaddle
 	
 	
 	mov			R0, #2
 	mov			R1, #(256 - 16 - 4)
-	mov			R2, #80
+	ldr			R2, =paddleY
+	ldr			R2, [R2, #4]
+	lsr			R2, #8
 	bl			drawPaddle
 	
 	

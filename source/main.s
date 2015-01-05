@@ -1,4 +1,7 @@
 #include "video.h"
+#include "input.h"
+
+#define PADDLE_SPEED 512
 
 	.text
 	.arm
@@ -136,19 +139,57 @@ main:
 	bl			drawBall
 	
 	
-	@ Draw paddles
+	@ Move and draw paddles
 	mov			R0, #1
 	mov			R1, #4
-	ldr			R2, =paddleY
-	ldr			R2, [R2]
+	ldr			R3, =paddleY
+	ldr			R2, [R3]
+	
+	ldr			R4, =REG_KEYINPUT
+	ldr			R4, [R4]
+	tst			R4, #KEY_UP
+	bne			.movedPaddle1Up
+	
+	.movePaddle1Up:
+	sub			R2, #PADDLE_SPEED
+	str			R2, [R3]
+	.movedPaddle1Up:
+	
+	tst			R4, #KEY_DOWN
+	bne			.movedPaddle1Down
+	
+	.movePaddle1Down:
+	add			R2, #PADDLE_SPEED
+	str			R2, [R3]
+	.movedPaddle1Down:
+	
 	lsr			R2, #8
 	bl			drawPaddle
 	
 	
 	mov			R0, #2
 	mov			R1, #(256 - 16 - 4)
-	ldr			R2, =paddleY
-	ldr			R2, [R2, #4]
+	ldr			R3, =paddleY
+	ldr			R2, [R3, #4]
+	
+	tst			R4, #KEY_B
+	bne			.movedPaddle2Down
+	
+	.movePaddle2Down:
+	add			R2, #PADDLE_SPEED
+	str			R2, [R3, #4]
+	.movedPaddle2Down:
+	
+	ldr			R4, =TRANSFER_REGION_BUTTONS
+	ldr			R4, [R4]
+	tst			R4, #KEY_X
+	bne			.movedPaddle2Up
+	
+	.movePaddle2Up:
+	sub			R2, #PADDLE_SPEED
+	str			R2, [R3, #4]
+	.movedPaddle2Up:
+	
 	lsr			R2, #8
 	bl			drawPaddle
 	

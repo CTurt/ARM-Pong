@@ -56,9 +56,30 @@ init:
 	ldmfd		sp!, {fp, lr}
 	bx			lr
 
-.global main
+
+	.global respawnBall
+	.type respawnBall, %function
+respawnBall:
+	push		{R0, R1}
+	
+	ldr			R1, =ballX
+	mov			R0, #120
+	lsl			R0, #8
+	str			R0, [R1]
+	
+	ldr			R1, =ballY
+	mov			R0, #88
+	lsl			R0, #8
+	str			R0, [R1]
+	
+	pop			{R0, R1}
+	bx			lr
+
+
+	.global main
+	.type main, %function
 main:
-	bl		init
+	bl			init
 	
 	@ Set BG_PALETTE and BG_PALETTE_SUB
 	ldr			R3, =BLACK
@@ -89,6 +110,10 @@ main:
 	bl			writePaddle
 	
 	
+	@ Spawn ball
+	bl			respawnBall
+	
+	
 	.infinite:
 	
 	@ Move and draw ball
@@ -100,7 +125,7 @@ main:
 	ldr			R4, [R3]
 	add			R2, R4
 	str			R2, [R1]
-	lsr			R1, R2, #8		
+	lsr			R1, R2, #8
 	
 	cmp			R1, #0
 	ble			.invertXV

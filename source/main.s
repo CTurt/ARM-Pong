@@ -151,7 +151,8 @@ main:
 	bne			.movedPaddle1Up
 	
 	.movePaddle1Up:
-	sub			R2, #PADDLE_SPEED
+	cmp			R2, #0
+	subgt		R2, #PADDLE_SPEED
 	str			R2, [R3]
 	.movedPaddle1Up:
 	
@@ -159,7 +160,8 @@ main:
 	bne			.movedPaddle1Down
 	
 	.movePaddle1Down:
-	add			R2, #PADDLE_SPEED
+	cmp			R2, #((192 - 32) << 8)
+	addlt		R2, #PADDLE_SPEED
 	str			R2, [R3]
 	.movedPaddle1Down:
 	
@@ -176,7 +178,8 @@ main:
 	bne			.movedPaddle2Down
 	
 	.movePaddle2Down:
-	add			R2, #PADDLE_SPEED
+	cmp			R2, #((192 - 32) << 8)
+	addlt		R2, #PADDLE_SPEED
 	str			R2, [R3, #4]
 	.movedPaddle2Down:
 	
@@ -186,7 +189,8 @@ main:
 	bne			.movedPaddle2Up
 	
 	.movePaddle2Up:
-	sub			R2, #PADDLE_SPEED
+	cmp			R2, #0
+	subgt		R2, #PADDLE_SPEED
 	str			R2, [R3, #4]
 	.movedPaddle2Up:
 	
